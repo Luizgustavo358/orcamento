@@ -1,0 +1,24 @@
+{
+  "name": "orcamento-pessoal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "accounting": "^0.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luizgustavo358/orcamento.git"
+  },
+  "author": "Luiz Gustavo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luizgustavo358/orcamento/issues"
+  },
+  "homepage": "https://github.com/Luizgustavo358/orcamento#readme"
+}
