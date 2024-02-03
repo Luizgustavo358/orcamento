@@ -231,10 +231,11 @@
             return acumulador;
         }, 0);
 
-        return Object.assign({
+        return {
+            ...totaisDespesas,
             receitas: totalReceita,
             total: totalReceita - totaisDespesas.despesas
-        }, totaisDespesas);
+        };
     }
 
     const renderizarProgressoCategoria = function(categoria, totais) {
@@ -294,24 +295,23 @@
         </div>`;
     }
 
-    const renderizarVisaoGeral = function(totais) {
+    const renderizarVisaoGeral = function({ receitas: totalReceitas, despesas: totalDespesas, total }) {
         elementos.cabecalho.visaoGeral.innerHTML = "";
 
         elementos.cabecalho.visaoGeral.innerHTML += renderizarItemVisaoGeral({
             descricao: 'Receitas',
-            valor: totais.receitas
+            valor: totalReceitas
         });
 
         elementos.cabecalho.visaoGeral.innerHTML += renderizarItemVisaoGeral({
             descricao: 'Despesas',
-            valor: totais.despesas
+            valor: totalDespesas
         });
 
         elementos.cabecalho.visaoGeral.innerHTML += renderizarItemVisaoGeral({
             descricao: 'Economia',
-            valor: totais.total
+            valor: total
         });
-
     }
 
     const renderizarCabecalho = function() {
@@ -323,7 +323,9 @@
 
         renderizarVisaoGeral(totais);
 
-        elementos.cabecalho.saldo.innerHTML = accounting.formatMoney(totais.total, 'R$ ', 2, '.', ',');
+        const { total } = totais;
+
+        elementos.cabecalho.saldo.innerHTML = accounting.formatMoney(total, 'R$ ', 2, '.', ',');
     }
 
     let receitas = [];
@@ -356,7 +358,8 @@
         };
 
         Object.keys(elementos.receita.campos).forEach(function(campo) {
-            receita[campo] = elementos.receita.campos[campo].value;
+            const { value } = elementos.receita.campos[campo];
+            receita[campo] = value;
         });
 
         receitas.push(receita);
@@ -382,7 +385,8 @@
         };
 
         Object.keys(elementos.despesa.campos).forEach(function(campo) {
-            despesa[campo] = elementos.despesa.campos[campo].value;
+            const { value } = elementos.despesa.campos[campo];
+            despesa[campo] = value;
         });
 
         despesas.push(despesa);
