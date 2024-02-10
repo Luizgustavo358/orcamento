@@ -1,4 +1,4 @@
-(function main() {
+(async function main() {
     const obterElementos = function() {
         const formReceita = document.getElementById('form-adicionar-receita');
         const formDespesa = document.getElementById('form-adicionar-despesa');
@@ -30,35 +30,38 @@
         };
     }
 
-    const storeGenerica = function(chave) {
-        return {
-            listar: function() {
-                return new Promise(function(resolve, reject) {
-                    setTimeout(function() {
-                        const itens = localStorage.getItem(chave);
+    class storeGenerica {
+        constructor(chave) {
+            this.chave = chave;
+        }
 
-                        if(!itens) {
-                            resolve([]);
-                            return;
-                        }
+        listar = () => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const itens = localStorage.getItem(this.chave);
 
-                        resolve(JSON.parse(itens));
-                    }, 2000);
-                });                
-            },
-            salvar: function(itens) {
-                return new Promise(function(resolve) {
-                    setTimeout(function() {
-                        localStorage.setItem(chave, JSON.stringify(itens));
-                        resolve();
-                    }, 2000);
-                });                
-            }
-        };
+                    if(!itens) {
+                        resolve([]);
+                        return;
+                    }
+
+                    resolve(JSON.parse(itens));
+                }, 2000);
+            });
+        }
+
+        salvar = itens => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    localStorage.setItem(this.chave, JSON.stringify(itens));
+                    resolve();
+                }, 2000);
+            });
+        }
     }
 
-    const despesasStore = storeGenerica('despesas');
-    const receitasStore = storeGenerica('receitas');
+    const despesasStore = new storeGenerica('despesas');
+    const receitasStore = new storeGenerica('receitas');
 
     const elementos = obterElementos();
 
@@ -342,15 +345,15 @@
         renderizarDespesas();
     });
 
-    Promise.all([
+    await Promise.all([
         receitasPromise,
         despesasPromise
-    ]).then(function() {
-        renderizarCabecalho();
-        carregarSelectDeCategorias();
-    });
+    ]);
 
-    elementos.receita.form.onsubmit = function(event) {
+    renderizarCabecalho();
+    carregarSelectDeCategorias();
+
+    elementos.receita.form.onsubmit = async function(event) {
         event.preventDefault();
 
         const receita = {
@@ -363,21 +366,22 @@
         });
 
         receitas.push(receita);
-        receitasStore
-            .salvar(receitas)
-            .then(function() {
-                elementos.receita.form.reset();
 
-                renderizarReceitas();
-                renderizarCabecalho();
+        try {
+            await receitasStore.salvar(receitas);
 
-                alert('Receita salva com sucesso!');
-            }).catch(function() {
-                alert('Ocorreu um erro ao salvar a Receita.');
-            });
+            elementos.receita.form.reset();
+
+            renderizarReceitas();
+            renderizarCabecalho();
+
+            alert('Receita salva com sucesso!');
+        } catch {
+            alert('Ocorreu um erro ao salvar a Receita.');
+        }
     }
 
-    elementos.despesa.form.onsubmit = function(event) {
+    elementos.despesa.form.onsubmit = async function(event) {
         event.preventDefault();
 
         const despesa = {
@@ -390,17 +394,18 @@
         });
 
         despesas.push(despesa);
-        despesasStore
-            .salvar(despesas)
-            .then(function() {
-                elementos.despesa.form.reset();
 
-                renderizarDespesas();
-                renderizarCabecalho();
-        
-                alert('Despesa salva com sucesso!');
-            }).catch(function() {
-                alert('Ocorreu um erro ao salvar a Despesa.')
-            });        
+        try {
+            await despesasStore.salvar(despesas);
+            
+            elementos.despesa.form.reset();
+
+            renderizarDespesas();
+            renderizarCabecalho();
+    
+            alert('Despesa salva com sucesso!');
+        } catch {
+            alert('Ocorreu um erro ao salvar a Despesa.')
+        }        
     }
 })();
