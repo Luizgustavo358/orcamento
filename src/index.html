@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="view-port" content="width=device-width, initial-scale=1">
+        <title>Meu Orçamento Pessoal</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/font-montserrat.css">
+        <link rel="stylesheet" href="css/fontawesome.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <header id="cabecalho">
+            <section id="cabecalho-principal">
+                <div id="container-esquerdo">
+                    <i class="fas fa-bars"></i>
+                    <!-- MENU
+                    <nav>
+                        <ul>
+                            <li>Configurações</li>
+                            <li></li>
+                            <li>Sobre</li>
+                        </ul>
+                    </nav> -->
+                </div>
+                <div id="container-central">
+                    <hgroup>
+                        <h5 class="ofuscado">Saldo atual</h5>
+                        <h2 id="saldo"></h2>
+                        <h4>
+                            <button class="btn btn-redondo">
+                                <i class="fas fa-caret-left"></i>
+                            </button> 
+                            Maio
+                            <button class="btn btn-redondo">
+                                <i class="fas fa-caret-right"></i>
+                            </button>
+                        </h4>
+                    </hgroup>
+                </div>
+                <div id="container-direito">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </section>
+            <section id="cabecalho-conteudo">
+                <div id="progresso-principal"></div>
+                <div id="progresso-categoria"></div>
+                <div id="visao-geral"></div>
+            </section>
+        </header>
+
+        <main id="conteudo">
+            <section id="despesas" class="coluna-conteudo">
+                <h3>Despesas</h3>
+                <table id="tabela-despesas" class="tabela-transacoes"></table>
+
+                <section id="form-despesa-container" class="form-container">
+                    <h4 class="titulo-form">Adicionar Despesa</h4>
+                    <form id="form-adicionar-despesa" class="form" name="form-despesa" action="#">
+                        <div class="linha-form">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" id="descricao" name="descricao" required>
+                        </div>
+                        
+                        <div class="linha-form">
+                            <label for="valor">Valor</label>
+                            <input type="number" id="valor" name="valor" step="0.01" required>
+                        </div>
+                        
+                        <div class="linha-form">
+                            <label for="categoria">Categoria</label>
+                            <select name="categoria" id="categoria" required>
+                                <option value="">Selecione uma categoria</option>
+                            </select>
+                        </div>
+                        
+                        <div class="linha-form">
+                            <button class="btn" type="submit">Adicionar</button>
+                        </div>
+                    </form>
+                </section>
+            </section>
+
+            <section id="receitas" class="coluna-conteudo">
+                <h3>Receitas</h3>
+                <table id="tabela-receitas" class="tabela-transacoes"></table>
+
+                <section id="form-receira-container" class="form-container">
+                    <h4 class="titulo-form">Adicionar Receita</h4>
+                    <form id="form-adicionar-receita" class="form" name="form-receita" action="#">
+                        <div class="linha-form">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" id="descricao" name="descricao" required>
+                        </div>
+
+                        <div class="linha-form">
+                            <label for="valor">Valor</label>
+                            <input type="number" id="valor" name="valor" step="0.01" required>
+                        </div>
+                        
+                        <div class="linha-form">
+                            <button class="btn" type="submit">Adicionar</button>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </main>
+
+        <script src="main.js"></script>
+    </body>
+</html>

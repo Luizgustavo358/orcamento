@@ -1,5 +1,8 @@
-(async function main() {
-    const obterElementos = function() {
+import accounting from "accounting";
+import storeGenerica from "./store.js";
+
+(async () => {
+    const obterElementos = () => {
         const formReceita = document.getElementById('form-adicionar-receita');
         const formDespesa = document.getElementById('form-adicionar-despesa');
 
@@ -28,36 +31,6 @@
                 }
             }
         };
-    }
-
-    class storeGenerica {
-        constructor(chave) {
-            this.chave = chave;
-        }
-
-        listar = () => {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    const itens = localStorage.getItem(this.chave);
-
-                    if(!itens) {
-                        resolve([]);
-                        return;
-                    }
-
-                    resolve(JSON.parse(itens));
-                }, 2000);
-            });
-        }
-
-        salvar = itens => {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    localStorage.setItem(this.chave, JSON.stringify(itens));
-                    resolve();
-                }, 2000);
-            });
-        }
     }
 
     const despesasStore = new storeGenerica('despesas');
@@ -353,7 +326,7 @@
     renderizarCabecalho();
     carregarSelectDeCategorias();
 
-    elementos.receita.form.onsubmit = async function(event) {
+    elementos.receita.form.onsubmit = async (event) => {
         event.preventDefault();
 
         const receita = {
@@ -381,7 +354,7 @@
         }
     }
 
-    elementos.despesa.form.onsubmit = async function(event) {
+    elementos.despesa.form.onsubmit = async (event) => {
         event.preventDefault();
 
         const despesa = {
